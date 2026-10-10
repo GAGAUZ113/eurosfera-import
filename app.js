@@ -118,10 +118,6 @@
       root.classList.remove('deal-flat'); root.classList.add('js-deal');
       var phone = matchMedia('(max-width:699px)').matches;
       var ok = stage.scrollHeight <= stage.clientHeight + 1;
-      if (ok && phone) {                                   // на телефоне нужен запас, а не «впритык»
-        var card = track.querySelector('.dossier'), pad = parseFloat(getComputedStyle(stage).paddingBottom) || 0;
-        if (card.offsetTop + card.offsetHeight + pad + 12 > stage.clientHeight) ok = false;
-      }
       if (ok && box) {
         var tallest = 0; steps.forEach(function (s) { tallest = Math.max(tallest, s.offsetHeight); });
         if (phone && tallest > box.clientHeight + 1) ok = false;
