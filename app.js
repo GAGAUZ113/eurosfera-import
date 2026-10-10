@@ -9,10 +9,11 @@
 
   /* Плавная прокрутка — один движок на страницу */
   if (window.Lenis) {
-    var lenis = new Lenis({ anchors: { offset: -70 }, lerp: 0.11 });
+    var lenis = new Lenis({ anchors: true, lerp: 0.11 });
     lenis.on('scroll', ScrollTrigger.update);
     gsap.ticker.add(function (t) { lenis.raf(t * 1000); });
     gsap.ticker.lagSmoothing(0);
+    window.__lenis = lenis;          // «живой» вариант сам листает страницу через этот же движок
   }
 
   /* ── Первый экран ── */
@@ -73,8 +74,7 @@
     });
     var stamps = gsap.utils.toArray('.stamp i');
     var bar = document.querySelector('.dossier__bar i');
-    var shown = -1;
-    root.classList.add('js-deal');
+    var shown = -1, st = null, stage = track.querySelector('.deal__stage'), box = track.querySelector('.steps');
 
     function draw(p) {
       var u = clamp(p) * N;
@@ -93,13 +93,54 @@
         r.el.classList.toggle('is-swapped', !!r.swap && r.swap <= k + 1);
       });
     }
-
-    ScrollTrigger.create({
-      trigger: track, start: 'top top', end: 'bottom bottom',
-      onUpdate: function (st) { draw(st.progress); },
-      onRefresh: function (st) { draw(st.progress); }
+    function pin() {
+      root.classList.remove('deal-flat'); root.classList.add('js-deal');
+      shown = -1;
+      st = ScrollTrigger.create({
+        trigger: track, start: 'top top', end: 'bottom bottom',
+        onUpdate: function (s) { draw(s.progress); },
+        onRefresh: function (s) { draw(s.progress); }
+      });
+      draw(st.progress || 0);
+    }
+    function unpin() {
+      if (st) { st.kill(); st = null; }
+      root.classList.remove('js-deal'); root.classList.add('deal-flat');
+      if (bar) bar.style.transform = '';
+      steps.forEach(function (s) { s.classList.remove('is-on'); s.removeAttribute('inert'); });
+      stamps.forEach(function (s) { s.classList.remove('is-on'); });
+      rows.forEach(function (r) { r.el.classList.remove('is-done', 'is-new', 'is-swapped'); });
+    }
+    /* Закрепляем сцену, только если досье и самый длинный шаг целиком помещаются в окно.
+       Иначе низ карточки срежется, а докрутить до него в закреплённой сцене нельзя. */
+    function fits() {
+      var was = root.classList.contains('js-deal');
+      root.classList.remove('deal-flat'); root.classList.add('js-deal');
+      var phone = matchMedia('(max-width:699px)').matches;
+      var ok = stage.scrollHeight <= stage.clientHeight + 1;
+      if (ok && phone) {                                   // на телефоне нужен запас, а не «впритык»
+        var card = track.querySelector('.dossier'), pad = parseFloat(getComputedStyle(stage).paddingBottom) || 0;
+        if (card.offsetTop + card.offsetHeight + pad + 12 > stage.clientHeight) ok = false;
+      }
+      if (ok && box) {
+        var tallest = 0; steps.forEach(function (s) { tallest = Math.max(tallest, s.offsetHeight); });
+        if (phone && tallest > box.clientHeight + 1) ok = false;
+      }
+      if (!was) root.classList.remove('js-deal');
+      return ok;
+    }
+    function settle() {
+      var ok = fits();
+      if (ok && !st) pin();
+      else if (!ok && (st || !root.classList.contains('deal-flat'))) unpin();
+    }
+    settle();
+    var wait = 0, lastW = innerWidth, lastH = innerHeight;
+    window.addEventListener('resize', function () {
+      if (innerWidth === lastW && Math.abs(innerHeight - lastH) < 120) return;   // адресная строка телефона ездит — это не повод перестраивать
+      lastW = innerWidth; lastH = innerHeight;
+      clearTimeout(wait); wait = setTimeout(function () { settle(); ScrollTrigger.refresh(); }, 220);
     });
-    draw(0);
   }
 
   /* ── Три потока: линии дотягиваются от отправителя к получателю ── */
@@ -107,10 +148,8 @@
     var lines = gsap.utils.toArray('.lane__track i');
     if (!lines.length) return;
     gsap.set(lines, { scaleX: 0 });
-    gsap.timeline({ scrollTrigger: { trigger: '.lanes', start: 'top 72%', end: 'bottom 48%', scrub: 0.6 } })
-      .to(lines[0], { scaleX: 1, ease: 'none' })
-      .to(lines[1], { scaleX: 1, ease: 'none' }, '>-0.25')
-      .to(lines[2], { scaleX: 1, ease: 'none' }, '>-0.25');
+    var tl = gsap.timeline({ scrollTrigger: { trigger: '.lanes', start: 'top 72%', end: 'bottom 48%', scrub: 0.6 } });
+    lines.forEach(function (l, i) { tl.to(l, { scaleX: 1, ease: 'none' }, i ? '>-0.2' : 0); });
   }
 
   /* ── Заголовки и строки появляются при входе в экран ── */
