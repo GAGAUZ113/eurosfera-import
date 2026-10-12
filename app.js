@@ -6,6 +6,7 @@
   box.querySelectorAll('[data-k]').forEach(function (el) { f[el.dataset.k] = el; });
   box.querySelectorAll('[data-v]').forEach(function (el) { v[el.dataset.v] = el; });
   box.querySelectorAll('[data-o]').forEach(function (el) { o[el.dataset.o] = el; });
+  var totals = box.querySelectorAll('[data-o=total]');   // итог показан дважды: в карточке и в строке над ползунками на телефоне
   var eur = function (n) { return Math.round(n).toLocaleString('ru-RU').replace(/\s/g, ' ') + ' €'; };
   var pct = function (x) { return String(+x).replace('.', ',') + ' %'; };
   function run() {
@@ -16,7 +17,8 @@
     ['pay', 'fx', 'lc', 'share', 'rate'].forEach(function (k) { v[k].textContent = pct(f[k].value); });
     v.term.textContent = f.term.value;
     o.pay.textContent = eur(pay); o.fx.textContent = eur(fx); o.lc.textContent = on ? eur(lc) : '—';
-    o.int.textContent = eur(intr); o.total.textContent = eur(pay + fx + lc + intr);
+    o.int.textContent = eur(intr);
+    totals.forEach(function (el) { el.textContent = eur(pay + fx + lc + intr); });
     f.lc.disabled = !on; f.lc.parentNode.classList.toggle('is-off', !on);
     box.querySelectorAll('input[type=range]').forEach(function (el) {
       el.style.setProperty('--fill', ((el.value - el.min) / (el.max - el.min) * 100).toFixed(2) + '%');

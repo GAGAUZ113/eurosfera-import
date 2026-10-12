@@ -34,7 +34,7 @@
 <main>
 
 <!-- ───────── Первый экран ───────── -->
-<section class="hero" id="hero">
+<section class="hero hero--fit" id="hero">
   <div class="hero__meta mono">
     <span data-tj="Лоиҳаи пешниҳод барои бонкҳои Тоҷикистон">Проект предложения для банков Таджикистана</span>
     <span data-tj="Октябри 2026">Октябрь 2026</span>
@@ -64,14 +64,15 @@
   </header>
   <div class="calc__grid">
     <form class="calc__in" onsubmit="return false">
-      <p class="mono calc__cap" data-tj="Намуна. Тарифҳои бонки худро гузоред">Пример. Подставьте тарифы своего банка</p>
+      <p class="mono calc__cap" data-tj="Намуна. Тарофаҳои бонки худро гузоред">Пример. Подставьте тарифы своего банка</p>
+      <p class="calc__bar" aria-hidden="true"><span class="mono" data-tj="Ҳамагӣ аз&nbsp;як муомила">Итого с&nbsp;одной сделки</span><b data-o="total">7&nbsp;000&nbsp;€</b></p>
       <label class="calc__f"><span data-tj="Маблағи шартномаи таҳвил">Сумма контракта поставки</span><output data-v="sum">100&nbsp;000&nbsp;€</output><input type="range" data-k="sum" min="20000" max="1000000" step="10000" value="100000"></label>
       <label class="calc__f"><span data-tj="Ҳаққи хизмат барои пардохти байналмилалӣ">Комиссия за&nbsp;международный платёж</span><output data-v="pay">0,3&nbsp;%</output><input type="range" data-k="pay" min="0" max="1" step="0.05" value="0.3"></label>
       <label class="calc__f"><span data-tj="Маржа аз&nbsp;мубодилаи асъор">Маржа на&nbsp;конвертации</span><output data-v="fx">0,8&nbsp;%</output><input type="range" data-k="fx" min="0" max="3" step="0.1" value="0.8"></label>
       <label class="calc__lc"><input type="checkbox" data-k="lcOn" checked><span data-tj="Ҳисоббаробаркунӣ бо&nbsp;аккредитив">Расчёт аккредитивом</span></label>
       <label class="calc__f"><span data-tj="Ҳаққи хизмат барои аккредитив">Комиссия по&nbsp;аккредитиву</span><output data-v="lc">1&nbsp;%</output><input type="range" data-k="lc" min="0" max="3" step="0.1" value="1"></label>
       <label class="calc__f"><span data-tj="Қарз барои воридот: ҳисса аз&nbsp;маблағ">Кредит на&nbsp;импорт: доля от&nbsp;суммы</span><output data-v="share">70&nbsp;%</output><input type="range" data-k="share" min="0" max="100" step="5" value="70"></label>
-      <label class="calc__f"><span data-tj="Меъёри фоизи қарз, дар як сол">Ставка по&nbsp;кредиту, годовых</span><output data-v="rate">14&nbsp;%</output><input type="range" data-k="rate" min="0" max="36" step="1" value="14"></label>
+      <label class="calc__f"><span data-tj="Меъёри фоизи қарз, солона">Ставка по&nbsp;кредиту, годовых</span><output data-v="rate">14&nbsp;%</output><input type="range" data-k="rate" min="0" max="36" step="1" value="14"></label>
       <label class="calc__f"><span data-tj="Муҳлати қарз, моҳ">Срок кредита, месяцев</span><output data-v="term">6</output><input type="range" data-k="term" min="1" max="24" step="1" value="6"></label>
     </form>
     <aside class="calc__card" aria-live="polite">
@@ -85,7 +86,7 @@
       <p class="calc__total"><span class="mono" data-tj="Ҳамагӣ аз&nbsp;як муомила">Итого с&nbsp;одной сделки</span><b data-o="total">7&nbsp;000&nbsp;€</b></p>
     </aside>
   </div>
-  <p class="mono calc__note" data-tj="Рақамҳо шартӣ мебошанд. Ҳисоб содда карда шудааст: фоизҳо ба&nbsp;тамоми маблағи қарз барои тамоми муҳлат ҳисоб шудаанд. Даромади бонк аз&nbsp;тарифҳои он ва&nbsp;шартҳои муомила вобаста&nbsp;аст.">Цифры условные. Расчёт упрощён: проценты начислены на&nbsp;всю сумму кредита за&nbsp;весь срок. Доход банка зависит от&nbsp;его тарифов и&nbsp;условий сделки.</p>
+  <p class="mono calc__note" data-tj="Рақамҳо шартӣ мебошанд. Ҳисоб содда карда шудааст: фоизҳо ба&nbsp;тамоми маблағи қарз барои тамоми муҳлат ҳисоб шудаанд. Даромади бонк аз&nbsp;тарофаҳои он ва&nbsp;шартҳои муомила вобаста&nbsp;аст.">Цифры условные. Расчёт упрощён: проценты начислены на&nbsp;всю сумму кредита за&nbsp;весь срок. Доход банка зависит от&nbsp;его тарифов и&nbsp;условий сделки.</p>
 </section>
 
 <!-- ───────── Что мы предлагаем банку ───────── -->
@@ -99,7 +100,7 @@
     <div>
       <h3 data-tj="Бонк">Банк</h3>
       <ul>
-        <li><b data-tj="Ҳисоббаробаркунии мизоҷ">Расчёты клиента</b><em data-tj="Интиқоли маблағ, мубодилаи асъор, аккредитив&nbsp;— тибқи тарифҳои&nbsp;бонк.">Перевод, конвертация, аккредитив&nbsp;— по&nbsp;тарифам&nbsp;банка.</em></li>
+        <li><b data-tj="Ҳисоббаробаркунии мизоҷ">Расчёты клиента</b><em data-tj="Интиқоли маблағ, мубодилаи асъор, аккредитив&nbsp;— тибқи тарофаҳои&nbsp;бонк.">Перевод, конвертация, аккредитив&nbsp;— по&nbsp;тарифам&nbsp;банка.</em></li>
         <li><b data-tj="Маблағгузорӣ">Финансирование</b><em data-tj="Қарз барои воридот, агар ба&nbsp;мизоҷ лозим бошад. Қарорро бонк қабул&nbsp;мекунад.">Кредит на&nbsp;импорт, если он нужен клиенту. Решение принимает&nbsp;банк.</em></li>
         <li><b data-tj="Санҷиши мизоҷ">Проверка клиента</b><em data-tj="Тибқи қоидаҳои&nbsp;бонк.">По&nbsp;правилам&nbsp;банка.</em></li>
       </ul>
@@ -131,7 +132,7 @@
   </header>
   <ul class="ledger">
       <li><span class="mono">01</span><b data-tj="Моро ба&nbsp;мизоҷон тавсия додан">Рекомендовать нас клиентам</b><em data-tj="Ба&nbsp;воридкунандагоне, ки ба&nbsp;онҳо мол аз&nbsp;хориҷа лозим аст. Ба&nbsp;мо муроҷиат кардан ё&nbsp;не&nbsp;— инро мизоҷ ҳал&nbsp;мекунад.">Импортёрам, которым нужен товар из-за рубежа. Обращаться&nbsp;ли к&nbsp;нам, решает&nbsp;клиент.</em></li>
-      <li><span class="mono">02</span><b data-tj="Ҳисоббаробаркунии мизоҷро анҷом додан">Вести расчёты клиента</b><em data-tj="Интиқоли маблағ ё&nbsp;аккредитив тибқи шартномаи таҳвил&nbsp;— мувофиқи тарифҳои&nbsp;бонк.">Перевод или аккредитив по&nbsp;контракту поставки&nbsp;— по&nbsp;тарифам&nbsp;банка.</em></li>
+      <li><span class="mono">02</span><b data-tj="Ҳисоббаробаркунии мизоҷро анҷом додан">Вести расчёты клиента</b><em data-tj="Интиқоли маблағ ё&nbsp;аккредитив тибқи шартномаи таҳвил&nbsp;— мувофиқи тарофаҳои&nbsp;бонк.">Перевод или аккредитив по&nbsp;контракту поставки&nbsp;— по&nbsp;тарифам&nbsp;банка.</em></li>
       <li><span class="mono">03</span><b data-tj="Шахси масъулро барои тамос таъин кардан">Назначить контактное лицо</b><em data-tj="Ба&nbsp;ӯ нусхаҳои ҳуҷҷатҳоро месупорем ва&nbsp;ба&nbsp;саволҳо оид ба&nbsp;муомилаҳо ҷавоб&nbsp;медиҳем.">Ему передаём копии документов и&nbsp;отвечаем на&nbsp;вопросы по&nbsp;сделкам.</em></li>
   </ul>
   <p class="need__say" data-tj="Бонк ба&nbsp;мо ҳеҷ чиз намепардозад ва&nbsp;барои таҳвил ҷавобгар нест. Даромади мо&nbsp;— иловапулии савдо дар нархи&nbsp;мол.">Банк нам ничего не&nbsp;платит и&nbsp;за&nbsp;поставку не&nbsp;отвечает. Наш доход&nbsp;— торговая наценка в&nbsp;цене&nbsp;товара.</p>
@@ -142,7 +143,7 @@
   <div class="band__media" aria-hidden="true">
     <picture><source media="(max-width: 699px)" srcset="img/port-m.jpg"><img src="img/port.jpg" alt="" loading="lazy" width="2200" height="1467"></picture>
   </div>
-  <p class="band__text" data-tj="Бонк ҳисоббаробаркунӣ ва&nbsp;маблағгузории тиҷоратӣ дорад: интиқоли маблағ, аккредитив, кафолат. Мо&nbsp;корҳои марбут ба&nbsp;молро ба&nbsp;зимма&nbsp;мегирем.">У&nbsp;банка есть расчёты и&nbsp;торговое финансирование: перевод, аккредитив, гарантия. Мы&nbsp;берём на&nbsp;себя товарную часть&nbsp;сделки.</p>
+  <p class="band__text" data-tj="Мизоҷ бо&nbsp;тавсияи бонк ба&nbsp;мо меояд&nbsp;— ва&nbsp;мизоҷи бонк боқӣ&nbsp;мемонад.">Клиент приходит к&nbsp;нам по&nbsp;рекомендации банка&nbsp;— и&nbsp;остаётся клиентом&nbsp;банка.</p>
 </section>
 
 <!-- ───────── Одна сделка: шесть шагов и досье ───────── -->
